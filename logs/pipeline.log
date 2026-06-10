@@ -1,0 +1,2 @@
+2026-06-10 21:18:48 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-08 → 2026-06-10
+2026-06-10 21:18:50 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Accra | records=72
