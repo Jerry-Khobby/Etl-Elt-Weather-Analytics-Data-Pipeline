@@ -157,7 +157,7 @@ services:
       postgres_analytics:
         condition: service_healthy
     networks:
-      - weather_network
+      - weather_network 
 
 volumes:
   postgres_airflow_data:
