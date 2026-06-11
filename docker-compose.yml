@@ -1,0 +1,169 @@
+x-airflow-common: &airflow-common
+  build: .
+  env_file:
+    - .env
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASSWORD}@postgres_airflow/${AIRFLOW_DB_NAME}"
+    AIRFLOW__CORE__FERNET_KEY: "${AIRFLOW_FERNET_KEY}"
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL: 10
+    AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT: 120
+    AIRFLOW__CORE__KILLED_TASK_CLEANUP_TIME: 300
+    PYTHONPATH: /opt/airflow/jobs
+    AIRFLOW_CONN_POSTGRES_ANALYTICS: "postgresql+psycopg2://${ANALYTICS_DB_USER}:${ANALYTICS_DB_PASSWORD}@postgres_analytics:5432/${ANALYTICS_DB_NAME}"
+    AIRFLOW_CONN_MYSQL_STAGING: "mysql://${STAGING_DB_USER}:${STAGING_DB_PASSWORD}@mysql_staging:3306/${STAGING_DB_NAME}"
+  volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./airflow/logs:/opt/airflow/logs
+    - ./airflow/plugins:/opt/airflow/plugins
+    - ./jobs:/opt/airflow/jobs
+  depends_on: &airflow-common-depends-on
+    postgres_airflow:
+      condition: service_healthy
+
+services:
+  postgres_airflow:
+    image: postgres:13
+    container_name: postgres_airflow
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: "${AIRFLOW_DB_USER}"
+      POSTGRES_PASSWORD: "${AIRFLOW_DB_PASSWORD}"
+      POSTGRES_DB: "${AIRFLOW_DB_NAME}"
+    volumes:
+      - postgres_airflow_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${AIRFLOW_DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - weather_network
+
+  mysql_staging:
+    image: mysql:8.4
+    container_name: mysql_staging
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: "${STAGING_DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${STAGING_DB_NAME}"
+      MYSQL_USER: "${STAGING_DB_USER}"
+      MYSQL_PASSWORD: "${STAGING_DB_PASSWORD}"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_staging_data:/var/lib/mysql
+      - ./sql/init_staging.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${STAGING_DB_USER}", "-p${STAGING_DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - weather_network
+
+  postgres_analytics:
+    image: postgres:14-alpine
+    container_name: postgres_analytics
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: "${ANALYTICS_DB_USER}"
+      POSTGRES_PASSWORD: "${ANALYTICS_DB_PASSWORD}"
+      POSTGRES_DB: "${ANALYTICS_DB_NAME}"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_analytics_data:/var/lib/postgresql/data
+      - ./sql/init_analytics.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${ANALYTICS_DB_USER} -d ${ANALYTICS_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - weather_network
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    container_name: airflow-init
+    command:
+      - -c
+      - |
+        airflow db migrate
+        airflow users create \
+          --username "${AIRFLOW_ADMIN_USERNAME}" \
+          --firstname Admin \
+          --lastname User \
+          --role Admin \
+          --email "${AIRFLOW_ADMIN_EMAIL}" \
+          --password "${AIRFLOW_ADMIN_PASSWORD}" 2>/dev/null || true
+        echo "Airflow initialized successfully"
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_MIGRATE: "true"
+      _AIRFLOW_WWW_USER_CREATE: "true"
+      _AIRFLOW_WWW_USER_USERNAME: "${AIRFLOW_ADMIN_USERNAME}"
+      _AIRFLOW_WWW_USER_PASSWORD: "${AIRFLOW_ADMIN_PASSWORD}"
+    networks:
+      - weather_network
+    restart: "no"
+
+  airflow-server:
+    <<: *airflow-common
+    command: webserver
+    container_name: airflow-server
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    depends_on:
+      postgres_airflow:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+      mysql_staging:
+        condition: service_healthy
+      postgres_analytics:
+        condition: service_healthy
+    networks:
+      - weather_network
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    container_name: airflow-scheduler
+    restart: unless-stopped
+    depends_on:
+      postgres_airflow:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+      mysql_staging:
+        condition: service_healthy
+      postgres_analytics:
+        condition: service_healthy
+    networks:
+      - weather_network
+
+volumes:
+  postgres_airflow_data:
+  mysql_staging_data:
+  postgres_analytics_data:
+
+networks:
+  weather_network:
+    driver: bridge
