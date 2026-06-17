@@ -11,14 +11,25 @@ x-airflow-common: &airflow-common
     AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL: 10
     AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT: 120
     AIRFLOW__CORE__KILLED_TASK_CLEANUP_TIME: 300
-    PYTHONPATH: /opt/airflow/jobs
+    PYTHONPATH: /opt/airflow
     AIRFLOW_CONN_POSTGRES_STAGING: "postgresql+psycopg2://${STAGING_DB_USER}:${STAGING_DB_PASSWORD}@postgres_staging:5432/${STAGING_DB_NAME}"
     AIRFLOW_CONN_POSTGRES_ANALYTICS: "postgresql+psycopg2://${ANALYTICS_DB_USER}:${ANALYTICS_DB_PASSWORD}@postgres_analytics:5432/${ANALYTICS_DB_NAME}"
+    DB_HOST: postgres_analytics
+    DB_PORT: 5432
+    DB_NAME: "${ANALYTICS_DB_NAME}"
+    DB_USER: "${ANALYTICS_DB_USER}"
+    DB_PASSWORD: "${ANALYTICS_DB_PASSWORD}"
+    STAGING_DB_HOST: postgres_staging
+    STAGING_DB_PORT: 5432
+    STAGING_DB_NAME: "${STAGING_DB_NAME}"
+    STAGING_DB_USER: "${STAGING_DB_USER}"
+    STAGING_DB_PASSWORD: "${STAGING_DB_PASSWORD}"
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - ./airflow/logs:/opt/airflow/logs
     - ./airflow/plugins:/opt/airflow/plugins
     - ./jobs:/opt/airflow/jobs
+    - ./data:/opt/airflow/data
   depends_on: &airflow-common-depends-on
     postgres_airflow:
       condition: service_healthy

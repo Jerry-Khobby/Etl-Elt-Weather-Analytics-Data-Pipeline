@@ -1,9 +1,6 @@
-apache-airflow-providers-postgres>=5.10.2
 requests>=2.31.0
 pandas>=2.2.0
 numpy>=1.26.4
-psycopg2-binary>=2.9.9
-SQLAlchemy>=2.0.30
+python-dotenv>=1.0.0
 pytest>=8.2.0
 pytest-mock>=3.14.0
-python-dotenv>=1.0.0
