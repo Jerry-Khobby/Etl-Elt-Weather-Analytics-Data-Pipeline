@@ -52,9 +52,9 @@ class WeatherExtractor:
         self._base_url = base_url
         self._session = self._build_session()
 
-    # ------------------------------------------------------------------ #
+
     # Public interface                                                      #
-    # ------------------------------------------------------------------ #
+
 
     def extract_all(
         self,
@@ -101,9 +101,9 @@ class WeatherExtractor:
             records_count=records_count,
         )
 
-    # ------------------------------------------------------------------ #
+
     # Context-manager support                                              #
-    # ------------------------------------------------------------------ #
+
 
     def __enter__(self) -> "WeatherExtractor":
         return self
@@ -112,9 +112,9 @@ class WeatherExtractor:
         self._session.close()
         return False
 
-    # ------------------------------------------------------------------ #
+
     # Private helpers                                                       #
-    # ------------------------------------------------------------------ #
+
 
     def _fetch(self, params: dict) -> dict:
         try:
@@ -194,9 +194,9 @@ class WeatherExtractor:
             )
 
 
-# ------------------------------------------------------------------ #
+
 # Module-level helpers                                                 #
-# ------------------------------------------------------------------ #
+
 
 def build_location(config: dict) -> Location:
     return Location(

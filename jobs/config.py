@@ -82,3 +82,6 @@ DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 # --- Logging ---
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 LOG_DIR = os.getenv("LOG_DIR", "logs")
+
+# --- Raw data output ---
+RAW_DATA_DIR = os.getenv("RAW_DATA_DIR", "data/raw")

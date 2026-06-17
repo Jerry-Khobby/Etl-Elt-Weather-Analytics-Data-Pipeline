@@ -7,9 +7,9 @@ from ..utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-# ------------------------------------------------------------------ #
+
 # DDL — star schema                                                    #
-# ------------------------------------------------------------------ #
+
 
 CREATE_DIM_LOCATION = """
 CREATE TABLE IF NOT EXISTS dim_location (
@@ -96,9 +96,9 @@ class WeatherDataLoader:
     def __init__(self):
         self._engine = self._build_engine()
 
-    # ------------------------------------------------------------------ #
+    
     # Public interface                                                      #
-    # ------------------------------------------------------------------ #
+    
 
     def initialize_schema(self) -> None:
         with self._engine.begin() as conn:
@@ -115,9 +115,9 @@ class WeatherDataLoader:
         self._load_fact_weather(df)
         logger.info("Load complete")
 
-    # ------------------------------------------------------------------ #
+    
     # Dimension loaders                                                    #
-    # ------------------------------------------------------------------ #
+    
 
     def _load_dim_location(self, df: pd.DataFrame) -> None:
         locations = (
@@ -206,9 +206,9 @@ class WeatherDataLoader:
                 })
         logger.info("dim_weather_condition: upserted %d row(s)", len(conditions))
 
-    # ------------------------------------------------------------------ #
+    
     # Fact loader                                                          #
-    # ------------------------------------------------------------------ #
+    
 
     def _load_fact_weather(self, df: pd.DataFrame) -> None:
         location_ids = self._fetch_location_ids()
@@ -252,9 +252,9 @@ class WeatherDataLoader:
 
         logger.info("fact_weather: inserted %d row(s)", len(fact_df))
 
-    # ------------------------------------------------------------------ #
+    
     # FK lookup helpers                                                    #
-    # ------------------------------------------------------------------ #
+    
 
     def _fetch_location_ids(self) -> dict:
         with self._engine.connect() as conn:
@@ -284,9 +284,9 @@ class WeatherDataLoader:
             ).fetchall()
         return {r.weather_code: r.condition_id for r in rows}
 
-    # ------------------------------------------------------------------ #
+    
     # Setup                                                                #
-    # ------------------------------------------------------------------ #
+    
 
     def _build_engine(self) -> Engine:
         connection_string = (

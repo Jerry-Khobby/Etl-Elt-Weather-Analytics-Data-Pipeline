@@ -12,8 +12,8 @@ x-airflow-common: &airflow-common
     AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT: 120
     AIRFLOW__CORE__KILLED_TASK_CLEANUP_TIME: 300
     PYTHONPATH: /opt/airflow/jobs
+    AIRFLOW_CONN_POSTGRES_STAGING: "postgresql+psycopg2://${STAGING_DB_USER}:${STAGING_DB_PASSWORD}@postgres_staging:5432/${STAGING_DB_NAME}"
     AIRFLOW_CONN_POSTGRES_ANALYTICS: "postgresql+psycopg2://${ANALYTICS_DB_USER}:${ANALYTICS_DB_PASSWORD}@postgres_analytics:5432/${ANALYTICS_DB_NAME}"
-    AIRFLOW_CONN_MYSQL_STAGING: "mysql://${STAGING_DB_USER}:${STAGING_DB_PASSWORD}@mysql_staging:3306/${STAGING_DB_NAME}"
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - ./airflow/logs:/opt/airflow/logs
@@ -44,23 +44,22 @@ services:
     networks:
       - weather_network
 
-  mysql_staging:
-    image: mysql:8.4
-    container_name: mysql_staging
+  postgres_staging:
+    image: postgres:14-alpine
+    container_name: postgres_staging
     env_file:
       - .env
     environment:
-      MYSQL_ROOT_PASSWORD: "${STAGING_DB_ROOT_PASSWORD}"
-      MYSQL_DATABASE: "${STAGING_DB_NAME}"
-      MYSQL_USER: "${STAGING_DB_USER}"
-      MYSQL_PASSWORD: "${STAGING_DB_PASSWORD}"
+      POSTGRES_USER: "${STAGING_DB_USER}"
+      POSTGRES_PASSWORD: "${STAGING_DB_PASSWORD}"
+      POSTGRES_DB: "${STAGING_DB_NAME}"
     ports:
-      - "3306:3306"
+      - "5434:5432"
     volumes:
-      - mysql_staging_data:/var/lib/mysql
+      - postgres_staging_data:/var/lib/postgresql/data
       - ./sql/init_staging.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${STAGING_DB_USER}", "-p${STAGING_DB_PASSWORD}"]
+      test: ["CMD-SHELL", "pg_isready -U ${STAGING_DB_USER} -d ${STAGING_DB_NAME}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -135,7 +134,7 @@ services:
         condition: service_healthy
       airflow-init:
         condition: service_completed_successfully
-      mysql_staging:
+      postgres_staging:
         condition: service_healthy
       postgres_analytics:
         condition: service_healthy
@@ -152,16 +151,41 @@ services:
         condition: service_healthy
       airflow-init:
         condition: service_completed_successfully
-      mysql_staging:
+      postgres_staging:
         condition: service_healthy
       postgres_analytics:
         condition: service_healthy
     networks:
-      - weather_network 
+      - weather_network
+
+  etl:
+    build: .
+    container_name: etl_pipeline
+    entrypoint: [""]
+    command: ["python", "-m", "jobs.etl.main"]
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres_analytics
+      DB_PORT: 5432
+      DB_NAME: "${ANALYTICS_DB_NAME}"
+      DB_USER: "${ANALYTICS_DB_USER}"
+      DB_PASSWORD: "${ANALYTICS_DB_PASSWORD}"
+      PYTHONPATH: /opt/airflow
+    volumes:
+      - ./jobs:/opt/airflow/jobs
+      - ./logs:/opt/airflow/logs
+      - ./data:/opt/airflow/data
+    depends_on:
+      postgres_analytics:
+        condition: service_healthy
+    networks:
+      - weather_network
+    restart: "no"
 
 volumes:
   postgres_airflow_data:
-  mysql_staging_data:
+  postgres_staging_data:
   postgres_analytics_data:
 
 networks:
