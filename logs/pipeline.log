@@ -835,3 +835,140 @@ WHERE is_processed  = FALSE
 2026-06-17 09:32:46 | INFO     | jobs.etl.load | Load complete
 2026-06-17 09:32:46 | INFO     | jobs.elt.load | Marked 1920 staging rows as processed
 2026-06-17 09:32:46 | INFO     | __main__ | ELT pipeline finished successfully
+2026-06-17 10:45:34 | INFO     | jobs.elt.extract | ELT raw extraction complete | rows=1 | locations=1
+2026-06-17 10:45:34 | INFO     | jobs.elt.extract | ELT raw extraction complete | rows=2 | locations=2
+2026-06-17 10:45:34 | INFO     | jobs.elt.extract | ELT raw extraction complete | rows=2 | locations=2
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging schema initialized
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging load complete | rows=1
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging load complete | rows=1
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging load complete | rows=3
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging load complete | rows=2
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | ERROR    | jobs.elt.load | Staging load failed: DB write failed
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/load.py", line 61, in load
+    rows = df.to_sql(
+           ^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: DB write failed
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Marked 3 staging rows as processed
+2026-06-17 10:45:34 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:34 | ERROR    | jobs.elt.load | Failed to create staging engine: connection refused
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/load.py", line 98, in _build_engine
+    engine = create_engine(connection_string, pool_pre_ping=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: connection refused
+2026-06-17 10:45:35 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-17 10:45:35 | INFO     | jobs.elt.main | ELT pipeline finished successfully
+2026-06-17 10:45:35 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-17 10:45:35 | INFO     | jobs.elt.main | No new staging data to process — ELT pipeline complete
+2026-06-17 10:45:35 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-17 10:45:35 | INFO     | jobs.elt.main | ELT pipeline finished successfully
+2026-06-17 10:45:35 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-17 10:45:35 | ERROR    | jobs.elt.main | ELT pipeline failed: API down
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/main.py", line 29, in run
+    raw_df = extract_raw()
+             ^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+RuntimeError: API down
+2026-06-17 10:45:35 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-17 10:45:35 | ERROR    | jobs.elt.main | ELT pipeline failed: Staging DB unreachable
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/main.py", line 31, in run
+    self._staging_loader.load(raw_df)
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: Staging DB unreachable
+2026-06-17 10:45:35 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-17 10:45:35 | ERROR    | jobs.elt.main | ELT pipeline failed: Analytics DB unreachable
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/main.py", line 39, in run
+    self._analytics_loader.load(transformed_df)
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: Analytics DB unreachable
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | No unprocessed rows found in staging
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-17 10:45:35 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-17 10:45:35 | ERROR    | jobs.elt.transform | Failed to create staging transformer engine: connection refused
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/transform.py", line 114, in _build_engine
+    engine = create_engine(connection_string, pool_pre_ping=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: connection refused
