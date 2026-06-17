@@ -72,12 +72,19 @@ DEFAULT_LOCATIONS = [
     },
 ]
 
-# --- Database (PostgreSQL) ---
+# --- Analytics Database (PostgreSQL star schema) ---
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = int(os.getenv("DB_PORT", "5432"))
 DB_NAME = os.getenv("DB_NAME", "weather_analytics")
 DB_USER = os.getenv("DB_USER", "postgres")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "")
+
+# --- Staging Database (PostgreSQL, ELT raw loads) ---
+STAGING_DB_HOST = os.getenv("STAGING_DB_HOST", "localhost")
+STAGING_DB_PORT = int(os.getenv("STAGING_DB_PORT", "5434"))
+STAGING_DB_NAME = os.getenv("STAGING_DB_NAME", "staging_db")
+STAGING_DB_USER = os.getenv("STAGING_DB_USER", "staging_user")
+STAGING_DB_PASSWORD = os.getenv("STAGING_DB_PASSWORD", "")
 
 # --- Logging ---
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")

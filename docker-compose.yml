@@ -183,6 +183,38 @@ services:
       - weather_network
     restart: "no"
 
+  elt:
+    build: .
+    container_name: elt_pipeline
+    entrypoint: [""]
+    command: ["python", "-m", "jobs.elt.main"]
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres_analytics
+      DB_PORT: 5432
+      DB_NAME: "${ANALYTICS_DB_NAME}"
+      DB_USER: "${ANALYTICS_DB_USER}"
+      DB_PASSWORD: "${ANALYTICS_DB_PASSWORD}"
+      STAGING_DB_HOST: postgres_staging
+      STAGING_DB_PORT: 5432
+      STAGING_DB_NAME: "${STAGING_DB_NAME}"
+      STAGING_DB_USER: "${STAGING_DB_USER}"
+      STAGING_DB_PASSWORD: "${STAGING_DB_PASSWORD}"
+      PYTHONPATH: /opt/airflow
+    volumes:
+      - ./jobs:/opt/airflow/jobs
+      - ./logs:/opt/airflow/logs
+      - ./data:/opt/airflow/data
+    depends_on:
+      postgres_staging:
+        condition: service_healthy
+      postgres_analytics:
+        condition: service_healthy
+    networks:
+      - weather_network
+    restart: "no"
+
   test:
     build: .
     container_name: etl_tests
