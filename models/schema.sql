@@ -1,11 +1,11 @@
--- ============================================================
+
 -- Weather Analytics Star Schema
 -- Database: PostgreSQL
--- ============================================================
 
--- ----------------------------------------
+
+
 -- Dimension: Location
--- ----------------------------------------
+
 CREATE TABLE IF NOT EXISTS dim_location (
     location_id   SERIAL       PRIMARY KEY,
     location_name VARCHAR(100) NOT NULL,
@@ -15,9 +15,9 @@ CREATE TABLE IF NOT EXISTS dim_location (
     UNIQUE (location_name, country)
 );
 
--- ----------------------------------------
+
 -- Dimension: Date
--- ----------------------------------------
+
 CREATE TABLE IF NOT EXISTS dim_date (
     date_id      SERIAL      PRIMARY KEY,
     full_date    DATE        NOT NULL UNIQUE,
@@ -32,18 +32,18 @@ CREATE TABLE IF NOT EXISTS dim_date (
     is_weekend   BOOLEAN     NOT NULL
 );
 
--- ----------------------------------------
+
 -- Dimension: Time (hour-level granularity)
--- ----------------------------------------
+
 CREATE TABLE IF NOT EXISTS dim_time (
     time_id       SERIAL      PRIMARY KEY,
     hour          SMALLINT    NOT NULL UNIQUE,  -- 0–23
     period_of_day VARCHAR(10) NOT NULL          -- Night/Morning/Afternoon/Evening
 );
 
--- ----------------------------------------
+
 -- Dimension: Weather Condition (WMO codes)
--- ----------------------------------------
+
 CREATE TABLE IF NOT EXISTS dim_weather_condition (
     condition_id SERIAL       PRIMARY KEY,
     weather_code SMALLINT     NOT NULL UNIQUE,
@@ -51,9 +51,9 @@ CREATE TABLE IF NOT EXISTS dim_weather_condition (
     category     VARCHAR(50)  NOT NULL  -- Clear/Cloudy/Rain/Snow/Fog/Storm
 );
 
--- ----------------------------------------
+
 -- Fact: Hourly Weather Measurements
--- ----------------------------------------
+
 CREATE TABLE IF NOT EXISTS fact_weather (
     fact_id                BIGSERIAL    PRIMARY KEY,
     location_id            INT          NOT NULL REFERENCES dim_location(location_id),
@@ -78,9 +78,9 @@ CREATE TABLE IF NOT EXISTS fact_weather (
     UNIQUE (location_id, date_id, time_id)
 );
 
--- ----------------------------------------
+
 -- Indexes for common analytical queries
--- ----------------------------------------
+
 CREATE INDEX IF NOT EXISTS idx_fact_location ON fact_weather(location_id);
 CREATE INDEX IF NOT EXISTS idx_fact_date     ON fact_weather(date_id);
 CREATE INDEX IF NOT EXISTS idx_fact_time     ON fact_weather(time_id);

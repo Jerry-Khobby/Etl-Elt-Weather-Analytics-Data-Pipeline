@@ -183,6 +183,22 @@ services:
       - weather_network
     restart: "no"
 
+  test:
+    build: .
+    container_name: etl_tests
+    entrypoint: [""]
+    command: ["pytest", "-v", "--tb=short"]
+    environment:
+      PYTHONPATH: /opt/airflow
+    volumes:
+      - ./jobs:/opt/airflow/jobs
+      - ./tests:/opt/airflow/tests
+      - ./pytest.ini:/opt/airflow/pytest.ini
+      - ./logs:/opt/airflow/logs
+    networks:
+      - weather_network
+    restart: "no"
+
 volumes:
   postgres_airflow_data:
   postgres_staging_data:
