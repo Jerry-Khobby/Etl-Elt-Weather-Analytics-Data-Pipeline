@@ -1,4 +1,3 @@
-import pandas as pd
 import pytest
 
 from jobs.elt.load import StagingLoader
@@ -30,53 +29,46 @@ def test_initialize_schema_executes_create_table_statement(loader, mock_conn):
 # --- load ---
 
 
-def test_load_renames_time_column_to_timestamp_before_inserting(loader, mocker):
-    captured = {}
-
-    def spy(self, name, con, **kwargs):
-        captured["columns"] = list(self.columns)
-        return len(self)
-
-    mocker.patch.object(pd.DataFrame, "to_sql", autospec=True, side_effect=spy)
-    raw_df = pd.DataFrame({"time": ["2026-06-10T00:00"], "temperature_2m": [28.5]})
+def test_load_renames_time_column_to_timestamp_before_inserting(loader, mock_conn):
+    raw_df = __make_raw_df({"time": ["2026-06-10T00:00"], "temperature_2m": [28.5]})
 
     loader.load(raw_df)
 
-    assert "timestamp" in captured["columns"]
-    assert "time" not in captured["columns"]
+    sql_text = str(mock_conn.execute.call_args.args[0])
+    assert '"timestamp"' in sql_text
+    assert '"time"' not in sql_text
 
 
-def test_load_inserts_into_the_staging_table(loader, mocker):
-    mock_to_sql = mocker.patch.object(pd.DataFrame, "to_sql", return_value=1)
-    raw_df = pd.DataFrame({"time": ["2026-06-10T00:00"]})
+def test_load_inserts_into_the_staging_table(loader, mock_conn):
+    raw_df = __make_raw_df({"time": ["2026-06-10T00:00"]})
 
     loader.load(raw_df)
 
-    args, _ = mock_to_sql.call_args
-    assert args[0] == "weather_raw_staging"
+    sql_text = str(mock_conn.execute.call_args.args[0])
+    assert "weather_raw_staging" in sql_text
 
 
-def test_load_returns_row_count_from_to_sql(loader, mocker):
-    mocker.patch.object(pd.DataFrame, "to_sql", return_value=3)
-    raw_df = pd.DataFrame({"time": ["a", "b", "c"]})
+def test_load_returns_row_count(loader, mock_conn):
+    raw_df = __make_raw_df({"time": ["a", "b", "c"]})
 
     count = loader.load(raw_df)
 
     assert count == 3
 
 
-def test_load_falls_back_to_dataframe_length_when_to_sql_returns_none(loader, mocker):
-    mocker.patch.object(pd.DataFrame, "to_sql", return_value=None)
-    raw_df = pd.DataFrame({"time": ["a", "b"]})
+def test_load_passes_records_as_dicts_to_execute(loader, mock_conn):
+    raw_df = __make_raw_df({"time": ["2026-06-10T00:00"]})
 
-    count = loader.load(raw_df)
+    loader.load(raw_df)
 
-    assert count == 2
+    records = mock_conn.execute.call_args.args[1]
+    assert isinstance(records, list)
+    assert "timestamp" in records[0]
 
 
-def test_load_reraises_exception_on_database_error(loader, mocker):
-    mocker.patch.object(pd.DataFrame, "to_sql", side_effect=Exception("DB write failed"))
-    raw_df = pd.DataFrame({"time": ["a"]})
+def test_load_reraises_exception_on_database_error(loader, mock_conn):
+    mock_conn.execute.side_effect = Exception("DB write failed")
+    raw_df = __make_raw_df({"time": ["a"]})
 
     with pytest.raises(Exception, match="DB write failed"):
         loader.load(raw_df)
@@ -128,3 +120,9 @@ def test_build_engine_raises_when_create_engine_fails(mocker):
 
     with pytest.raises(Exception, match="connection refused"):
         StagingLoader()
+
+
+def __make_raw_df(data: dict):
+    import pandas as pd
+
+    return pd.DataFrame(data)

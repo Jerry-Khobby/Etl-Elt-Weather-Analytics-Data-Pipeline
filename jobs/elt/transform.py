@@ -98,7 +98,10 @@ class StagingTransformer:
 
     def _run_sql_transform(self) -> pd.DataFrame:
         with self._engine.connect() as conn:
-            return pd.read_sql(text(TRANSFORM_UNPROCESSED_SQL), conn)
+            result = conn.execute(text(TRANSFORM_UNPROCESSED_SQL))
+            rows = result.fetchall()
+            columns = list(result.keys())
+        return pd.DataFrame(rows, columns=columns)
 
     def _add_weather_labels(self, df: pd.DataFrame) -> pd.DataFrame:
         df["weather_description"] = df["weather_code"].map(_resolve_weather_description)

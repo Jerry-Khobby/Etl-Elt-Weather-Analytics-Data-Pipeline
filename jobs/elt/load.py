@@ -57,17 +57,17 @@ class StagingLoader:
 
     def load(self, raw_df: pd.DataFrame) -> int:
         df = raw_df.rename(columns={"time": "timestamp"})
+        col_names = ", ".join(f'"{c}"' for c in df.columns)
+        placeholders = ", ".join(f":{c}" for c in df.columns)
+        insert_sql = text(
+            f"INSERT INTO {STAGING_TABLE} ({col_names}) VALUES ({placeholders})"
+        )
+        records = df.to_dict(orient="records")
         try:
-            rows = df.to_sql(
-                STAGING_TABLE,
-                self._engine,
-                if_exists="append",
-                index=False,
-                method="multi",
-            )
-            count = rows if rows is not None else len(df)
-            logger.info("Staging load complete | rows=%d", count)
-            return count
+            with self._engine.begin() as conn:
+                conn.execute(insert_sql, records)
+            logger.info("Staging load complete | rows=%d", len(df))
+            return len(df)
         except Exception as error:
             logger.exception("Staging load failed: %s", error)
             raise
