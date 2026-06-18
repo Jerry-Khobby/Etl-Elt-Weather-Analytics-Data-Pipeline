@@ -2395,3 +2395,426 @@ extracted_at            0
 2026-06-17 12:12:39 | INFO     | jobs.etl.load | fact_weather: inserted 960 row(s)
 2026-06-17 12:12:39 | INFO     | jobs.etl.load | Load complete
 2026-06-17 12:12:39 | INFO     | __main__ | ETL pipeline finished successfully
+2026-06-18 09:50:42 | INFO     | jobs.elt.extract | ELT raw extraction complete | rows=1 | locations=1
+2026-06-18 09:50:43 | INFO     | jobs.elt.extract | ELT raw extraction complete | rows=2 | locations=2
+2026-06-18 09:50:43 | INFO     | jobs.elt.extract | ELT raw extraction complete | rows=2 | locations=2
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging schema initialized
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging load complete | rows=1
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging load complete | rows=1
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging load complete | rows=3
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging load complete | rows=1
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | ERROR    | jobs.elt.load | Staging load failed: DB write failed
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/load.py", line 68, in load
+    conn.execute(insert_sql, records)
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: DB write failed
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Marked 3 staging rows as processed
+2026-06-18 09:50:43 | INFO     | jobs.elt.load | Staging engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:43 | ERROR    | jobs.elt.load | Failed to create staging engine: connection refused
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/load.py", line 98, in _build_engine
+    engine = create_engine(connection_string, pool_pre_ping=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: connection refused
+2026-06-18 09:50:43 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:44 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:44 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-18 09:50:44 | INFO     | jobs.elt.main | ELT pipeline finished successfully
+2026-06-18 09:50:44 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-18 09:50:44 | INFO     | jobs.elt.main | No new staging data to process — ELT pipeline complete
+2026-06-18 09:50:44 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:44 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:44 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-18 09:50:44 | INFO     | jobs.elt.main | ELT pipeline finished successfully
+2026-06-18 09:50:44 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-18 09:50:44 | ERROR    | jobs.elt.main | ELT pipeline failed: API down
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/main.py", line 29, in run
+    raw_df = extract_raw()
+             ^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+RuntimeError: API down
+2026-06-18 09:50:44 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-18 09:50:44 | ERROR    | jobs.elt.main | ELT pipeline failed: Staging DB unreachable
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/main.py", line 31, in run
+    self._staging_loader.load(raw_df)
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: Staging DB unreachable
+2026-06-18 09:50:44 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:44 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:44 | INFO     | jobs.elt.main | ELT pipeline starting
+2026-06-18 09:50:44 | ERROR    | jobs.elt.main | ELT pipeline failed: Analytics DB unreachable
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/main.py", line 39, in run
+    self._analytics_loader.load(transformed_df)
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: Analytics DB unreachable
+2026-06-18 09:50:44 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:44 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | No unprocessed rows found in staging
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=localhost port=5434 db=staging_db
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-18 09:50:45 | INFO     | jobs.elt.transform | ELT transformation complete | rows=2
+2026-06-18 09:50:45 | ERROR    | jobs.elt.transform | Failed to create staging transformer engine: connection refused
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/elt/transform.py", line 117, in _build_engine
+    engine = create_engine(connection_string, pool_pre_ping=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: connection refused
+2026-06-18 09:50:45 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:45 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Accra | records=2
+2026-06-18 09:50:45 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:45 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Accra | records=2
+2026-06-18 09:50:45 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:45 | ERROR    | jobs.etl.extraction | Connection error while calling the API: 
+2026-06-18 09:50:45 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:45 | ERROR    | jobs.etl.extraction | API request timed out after 30s: 
+2026-06-18 09:50:45 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:45 | ERROR    | jobs.etl.extraction | HTTP 500 from API: 
+2026-06-18 09:50:45 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:45 | ERROR    | jobs.etl.extraction | API returned a non-JSON body: : line 1 column 1 (char 0)
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Accra | records=2
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Starting extraction | location=London, United Kingdom | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Extraction succeeded | location=London | records=2
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Starting extraction | location=New York, United States | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Extraction succeeded | location=New York | records=2
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Starting extraction | location=Tokyo, Japan | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Tokyo | records=2
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Starting extraction | location=Berlin, Germany | range=2026-06-10 → 2026-06-17
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Berlin | records=2
+2026-06-18 09:50:46 | INFO     | jobs.etl.extraction | Batch extraction complete | locations=5 | total_records=10
+2026-06-18 09:50:46 | INFO     | jobs.etl.load | Database engine ready | host=localhost port=5432 db=weather_analytics
+2026-06-18 09:50:46 | INFO     | jobs.etl.load | Star schema initialized (tables created where absent)
+2026-06-18 09:50:46 | INFO     | jobs.etl.load | Database engine ready | host=localhost port=5432 db=weather_analytics
+2026-06-18 09:50:46 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:46 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:46 | INFO     | jobs.etl.load | dim_location: upserted 1 row(s)
+2026-06-18 09:50:46 | INFO     | jobs.etl.load | Database engine ready | host=localhost port=5432 db=weather_analytics
+2026-06-18 09:50:46 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:46 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:47 | INFO     | jobs.etl.load | dim_date: upserted 1 row(s)
+2026-06-18 09:50:47 | INFO     | jobs.etl.load | Database engine ready | host=localhost port=5432 db=weather_analytics
+2026-06-18 09:50:47 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:47 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:47 | INFO     | jobs.etl.load | dim_time: upserted 2 row(s)
+2026-06-18 09:50:47 | INFO     | jobs.etl.load | Database engine ready | host=localhost port=5432 db=weather_analytics
+2026-06-18 09:50:47 | INFO     | jobs.etl.load | Database engine ready | host=localhost port=5432 db=weather_analytics
+2026-06-18 09:50:47 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:47 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:47 | INFO     | jobs.etl.load | dim_weather_condition: upserted 2 row(s)
+2026-06-18 09:50:47 | ERROR    | jobs.etl.load | Failed to create database engine: connection refused
+2026-06-18 09:50:47 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:47 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:47 | INFO     | jobs.etl.main | ETL pipeline starting
+2026-06-18 09:50:47 | INFO     | jobs.etl.main | ETL pipeline finished successfully
+2026-06-18 09:50:47 | INFO     | jobs.etl.main | ETL pipeline starting
+2026-06-18 09:50:47 | ERROR    | jobs.etl.main | ETL pipeline failed: API down
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/etl/main.py", line 30, in run
+    raw_df = self._extract()
+             ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+RuntimeError: API down
+2026-06-18 09:50:47 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:47 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:47 | INFO     | jobs.etl.main | ETL pipeline starting
+2026-06-18 09:50:47 | ERROR    | jobs.etl.main | ETL pipeline failed: DB unreachable
+Traceback (most recent call last):
+  File "/opt/airflow/jobs/etl/main.py", line 33, in run
+    self._loader.initialize_schema()
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/unittest/mock.py", line 1193, in _execute_mock_call
+    raise effect
+Exception: DB unreachable
+2026-06-18 09:50:48 | INFO     | jobs.etl.main | Extract phase done | rows=4
+2026-06-18 09:50:48 | INFO     | jobs.etl.main | Raw data saved | path=/tmp/pytest-of-airflow/pytest-0/test_save_raw_creates_csv_file0/weather_raw_20260618_095048.csv | shape=(2, 20)
+2026-06-18 09:50:48 | INFO     | jobs.etl.main | --- RAW DATA PREVIEW (first 5 rows) ---
+            time  temperature_2m  relative_humidity_2m  precipitation  rain  snowfall  weather_code  cloud_cover  wind_speed_10m  wind_direction_10m  wind_gusts_10m  surface_pressure  visibility  uv_index  is_day location_name location_country  latitude  longitude              extracted_at
+2026-06-10T00:00            28.5                  75.0            0.0   0.0       0.0             0         10.0            12.0               180.0            18.0            1013.0     10000.0       0.0       0         Accra            Ghana     5.556     -0.197 2026-06-10T00:00:00+00:00
+2026-06-10T08:00            30.1                  68.0            0.0   0.0       0.0             3         25.0            15.0               195.0            22.0            1012.0      9000.0       5.0       1         Accra            Ghana     5.556     -0.197 2026-06-10T00:00:00+00:00
+2026-06-18 09:50:48 | INFO     | jobs.etl.main | --- COLUMN TYPES ---
+time                        str
+temperature_2m          float64
+relative_humidity_2m    float64
+precipitation           float64
+rain                    float64
+snowfall                float64
+weather_code              int64
+cloud_cover             float64
+wind_speed_10m          float64
+wind_direction_10m      float64
+wind_gusts_10m          float64
+surface_pressure        float64
+visibility              float64
+uv_index                float64
+is_day                    int64
+location_name               str
+location_country            str
+latitude                float64
+longitude               float64
+extracted_at                str
+2026-06-18 09:50:48 | INFO     | jobs.etl.main | --- MISSING VALUES ---
+time                    0
+temperature_2m          0
+relative_humidity_2m    0
+precipitation           0
+rain                    0
+snowfall                0
+weather_code            0
+cloud_cover             0
+wind_speed_10m          0
+wind_direction_10m      0
+wind_gusts_10m          0
+surface_pressure        0
+visibility              0
+uv_index                0
+is_day                  0
+location_name           0
+location_country        0
+latitude                0
+longitude               0
+extracted_at            0
+2026-06-18 09:50:48 | INFO     | jobs.etl.main | Raw data saved | path=/tmp/pytest-of-airflow/pytest-0/test_save_raw_csv_content_matc0/weather_raw_20260618_095048.csv | shape=(2, 20)
+2026-06-18 09:50:48 | INFO     | jobs.etl.main | --- RAW DATA PREVIEW (first 5 rows) ---
+            time  temperature_2m  relative_humidity_2m  precipitation  rain  snowfall  weather_code  cloud_cover  wind_speed_10m  wind_direction_10m  wind_gusts_10m  surface_pressure  visibility  uv_index  is_day location_name location_country  latitude  longitude              extracted_at
+2026-06-10T00:00            28.5                  75.0            0.0   0.0       0.0             0         10.0            12.0               180.0            18.0            1013.0     10000.0       0.0       0         Accra            Ghana     5.556     -0.197 2026-06-10T00:00:00+00:00
+2026-06-10T08:00            30.1                  68.0            0.0   0.0       0.0             3         25.0            15.0               195.0            22.0            1012.0      9000.0       5.0       1         Accra            Ghana     5.556     -0.197 2026-06-10T00:00:00+00:00
+2026-06-18 09:50:48 | INFO     | jobs.etl.main | --- COLUMN TYPES ---
+time                        str
+temperature_2m          float64
+relative_humidity_2m    float64
+precipitation           float64
+rain                    float64
+snowfall                float64
+weather_code              int64
+cloud_cover             float64
+wind_speed_10m          float64
+wind_direction_10m      float64
+wind_gusts_10m          float64
+surface_pressure        float64
+visibility              float64
+uv_index                float64
+is_day                    int64
+location_name               str
+location_country            str
+latitude                float64
+longitude               float64
+extracted_at                str
+2026-06-18 09:50:48 | INFO     | jobs.etl.main | --- MISSING VALUES ---
+time                    0
+temperature_2m          0
+relative_humidity_2m    0
+precipitation           0
+rain                    0
+snowfall                0
+weather_code            0
+cloud_cover             0
+wind_speed_10m          0
+wind_direction_10m      0
+wind_gusts_10m          0
+surface_pressure        0
+visibility              0
+uv_index                0
+is_day                  0
+location_name           0
+location_country        0
+latitude                0
+longitude               0
+extracted_at            0
+2026-06-18 09:50:48 | WARNING  | jobs.etl.transform | Dropped 1 rows with nulls in critical columns
+2026-06-18 09:50:48 | WARNING  | jobs.etl.transform | Removed 1 duplicate rows
+2026-06-18 09:50:48 | WARNING  | jobs.etl.transform | Column 'temperature_celsius': 1 out-of-range value(s) set to NaN
+2026-06-18 09:50:48 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:49 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:49 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:49 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:49 | INFO     | jobs.etl.transform | Transformation started | rows=2
+2026-06-18 09:50:49 | INFO     | jobs.etl.transform | Transformation complete | rows=2
+2026-06-18 09:50:53 | INFO     | jobs.elt.load | Staging engine ready | host=postgres_staging port=5432 db=staging_db
+2026-06-18 09:50:53 | INFO     | jobs.elt.transform | Staging transformer engine ready | host=postgres_staging port=5432 db=staging_db
+2026-06-18 09:50:53 | INFO     | jobs.etl.load | Database engine ready | host=postgres_analytics port=5432 db=weather_analytics
+2026-06-18 09:50:53 | INFO     | __main__ | ELT pipeline starting
+2026-06-18 09:50:53 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:53 | INFO     | jobs.etl.load | Database engine ready | host=postgres_analytics port=5432 db=weather_analytics
+2026-06-18 09:50:53 | INFO     | __main__ | ETL pipeline starting
+2026-06-18 09:50:53 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:53 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Accra | records=192
+2026-06-18 09:50:53 | INFO     | jobs.etl.extraction | Starting extraction | location=London, United Kingdom | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:54 | INFO     | jobs.etl.extraction | Extraction succeeded | location=London | records=192
+2026-06-18 09:50:54 | INFO     | jobs.etl.extraction | Starting extraction | location=New York, United States | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Extraction succeeded | location=New York | records=192
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Starting extraction | location=Tokyo, Japan | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Tokyo | records=192
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Starting extraction | location=Berlin, Germany | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Accra | records=192
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Starting extraction | location=London, United Kingdom | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Berlin | records=192
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Batch extraction complete | locations=5 | total_records=960
+2026-06-18 09:50:55 | INFO     | jobs.elt.extract | ELT raw extraction complete | rows=960 | locations=5
+92
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Starting extraction | location=New York, United States | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:55 | INFO     | jobs.elt.load | Staging schema initialized
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Extraction succeeded | location=New York | records=192
+2026-06-18 09:50:55 | INFO     | jobs.etl.extraction | Starting extraction | location=Tokyo, Japan | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:56 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Tokyo | records=192
+2026-06-18 09:50:56 | INFO     | jobs.etl.extraction | Starting extraction | location=Berlin, Germany | range=2026-06-11 → 2026-06-18
+2026-06-18 09:50:56 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Berlin | records=192
+2026-06-18 09:50:56 | INFO     | jobs.etl.extraction | Batch extraction complete | locations=5 | total_records=960
+2026-06-18 09:50:56 | INFO     | __main__ | Extract phase done | rows=960
+2026-06-18 09:50:56 | INFO     | __main__ | Raw data saved | path=data/raw/weather_raw_20260618_095056.csv | shape=(960, 20)
+2026-06-18 09:50:56 | INFO     | __main__ | --- RAW DATA PREVIEW (first 5 rows) ---
+            time  temperature_2m  relative_humidity_2m  precipitation  rain  snowfall  weather_code  cloud_cover  wind_speed_10m  wind_direction_10m  wind_gusts_10m  surface_pressure  visibility  uv_index  is_day location_name location_country  latitude  longitude                     extracted_at
+2026-06-11T00:00            24.8                    94            0.0   0.0       0.0             3          100             5.1                  94            13.0            1010.4      2460.0       0.0       0         Accra            Ghana     5.556    -0.1969 2026-06-18T09:50:55.309696+00:00
+2026-06-11T01:00            24.0                    96            6.2   0.4       0.0            95          100             7.3                 123            17.3            1009.7      1660.0       0.0       0         Accra            Ghana     5.556    -0.1969 2026-06-18T09:50:55.309696+00:00
+2026-06-11T02:00            23.8                    95            7.1   2.1       0.0            81           99            14.9                 228            29.5            1008.2      3300.0       0.0       0         Accra            Ghana     5.556    -0.1969 2026-06-18T09:50:55.309696+00:00
+2026-06-11T03:00            23.8                    96            0.5   0.4       0.0            53           98             7.3                 306            32.0            1007.8      8520.0       0.0       0         Accra            Ghana     5.556    -0.1969 2026-06-18T09:50:55.309696+00:00
+2026-06-11T04:00            23.7                    98            0.0   0.0       0.0             3           99             3.2                 317            14.4            1008.5     14960.0       0.0       0         Accra            Ghana     5.556    -0.1969 2026-06-18T09:50:55.309696+00:00
+2026-06-18 09:50:56 | INFO     | __main__ | --- COLUMN TYPES ---
+time                        str
+temperature_2m          float64
+relative_humidity_2m      int64
+precipitation           float64
+rain                    float64
+snowfall                float64
+weather_code              int64
+cloud_cover               int64
+wind_speed_10m          float64
+wind_direction_10m        int64
+wind_gusts_10m          float64
+surface_pressure        float64
+visibility              float64
+uv_index                float64
+is_day                    int64
+location_name               str
+location_country            str
+latitude                float64
+longitude               float64
+extracted_at                str
+2026-06-18 09:50:56 | INFO     | __main__ | --- MISSING VALUES ---
+time                    0
+temperature_2m          0
+relative_humidity_2m    0
+precipitation           0
+rain                    0
+snowfall                0
+weather_code            0
+cloud_cover             0
+wind_speed_10m          0
+wind_direction_10m      0
+wind_gusts_10m          0
+surface_pressure        0
+visibility              0
+uv_index                0
+is_day                  0
+location_name           0
+location_country        0
+latitude                0
+longitude               0
+extracted_at            0
+2026-06-18 09:50:56 | INFO     | jobs.etl.transform | Transformation started | rows=960
+2026-06-18 09:50:56 | INFO     | jobs.etl.transform | Transformation complete | rows=960
+2026-06-18 09:50:56 | INFO     | jobs.etl.load | Star schema initialized (tables created where absent)
+2026-06-18 09:50:56 | INFO     | jobs.etl.load | Load started | rows=960
+2026-06-18 09:50:56 | INFO     | jobs.etl.load | dim_location: upserted 5 row(s)
+2026-06-18 09:50:56 | INFO     | jobs.etl.load | dim_date: upserted 8 row(s)
+2026-06-18 09:50:57 | INFO     | jobs.etl.load | dim_time: upserted 24 row(s)
+2026-06-18 09:50:57 | INFO     | jobs.elt.load | Staging load complete | rows=960
+2026-06-18 09:50:57 | INFO     | jobs.elt.transform | ELT SQL transformation started
+2026-06-18 09:50:57 | INFO     | jobs.etl.load | dim_weather_condition: upserted 13 row(s)
+2026-06-18 09:50:57 | INFO     | jobs.elt.transform | ELT transformation complete | rows=960
+2026-06-18 09:50:57 | INFO     | jobs.etl.load | Star schema initialized (tables created where absent)
+2026-06-18 09:50:57 | INFO     | jobs.etl.load | Load started | rows=960
+2026-06-18 09:50:57 | INFO     | jobs.etl.load | dim_location: upserted 5 row(s)
+2026-06-18 09:50:57 | INFO     | jobs.etl.load | dim_date: upserted 8 row(s)
+2026-06-18 09:50:57 | INFO     | jobs.etl.load | dim_time: upserted 24 row(s)
+2026-06-18 09:50:57 | INFO     | jobs.etl.load | dim_weather_condition: upserted 13 row(s)
+2026-06-18 09:50:59 | INFO     | jobs.etl.load | fact_weather: inserted 960 row(s)
+2026-06-18 09:50:59 | INFO     | jobs.etl.load | Load complete
+2026-06-18 09:50:59 | INFO     | __main__ | ETL pipeline finished successfully
+2026-06-18 09:51:00 | INFO     | jobs.etl.load | fact_weather: inserted 960 row(s)
+2026-06-18 09:51:00 | INFO     | jobs.etl.load | Load complete
+2026-06-18 09:51:01 | INFO     | jobs.elt.load | Marked 960 staging rows as processed
+2026-06-18 09:51:01 | INFO     | __main__ | ELT pipeline finished successfully

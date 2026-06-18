@@ -1,0 +1,28 @@
+[2026-06-18T08:10:50.172+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-06-18T08:10:50.337+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_etl_pipeline.load_weather_data scheduled__2026-06-17T00:00:00+00:00 [queued]>
+[2026-06-18T08:10:50.393+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_etl_pipeline.load_weather_data scheduled__2026-06-17T00:00:00+00:00 [queued]>
+[2026-06-18T08:10:50.405+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-06-18T08:10:50.465+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): load_weather_data> on 2026-06-17 00:00:00+00:00
+[2026-06-18T08:10:50.504+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_etl_pipeline', 'load_weather_data', 'scheduled__2026-06-17T00:00:00+00:00', '--job-id', '14', '--raw', '--subdir', 'DAGS_FOLDER/weather_etl_dag.py', '--cfg-path', '/tmp/tmphem5cke1']
+[2026-06-18T08:10:50.528+0000] {standard_task_runner.py:91} INFO - Job 14: Subtask load_weather_data
+[2026-06-18T08:10:50.556+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=7435) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-06-18T08:10:50.571+0000] {standard_task_runner.py:63} INFO - Started process 7436 to run task
+[2026-06-18T08:10:50.736+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_etl_pipeline.load_weather_data scheduled__2026-06-17T00:00:00+00:00 [running]> on host b1ed001435bc
+[2026-06-18T08:10:51.117+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='weather_etl_pipeline' AIRFLOW_CTX_TASK_ID='load_weather_data' AIRFLOW_CTX_EXECUTION_DATE='2026-06-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-06-17T00:00:00+00:00'
+[2026-06-18T08:10:51.126+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-06-18T08:10:54.050+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:10:54 | INFO     | jobs.etl.load | Database engine ready | host=postgres_analytics port=5432 db=weather_analytics
+[2026-06-18T08:10:54.186+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:10:54 | INFO     | jobs.etl.load | Star schema initialized (tables created where absent)
+[2026-06-18T08:10:54.194+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:10:54 | INFO     | jobs.etl.load | Load started | rows=960
+[2026-06-18T08:10:54.250+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:10:54 | INFO     | jobs.etl.load | dim_location: upserted 5 row(s)
+[2026-06-18T08:10:54.297+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:10:54 | INFO     | jobs.etl.load | dim_date: upserted 8 row(s)
+[2026-06-18T08:10:54.356+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:10:54 | INFO     | jobs.etl.load | dim_time: upserted 24 row(s)
+[2026-06-18T08:10:54.406+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:10:54 | INFO     | jobs.etl.load | dim_weather_condition: upserted 13 row(s)
+[2026-06-18T08:10:56.286+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:10:56 | INFO     | jobs.etl.load | fact_weather: inserted 960 row(s)
+[2026-06-18T08:10:56.307+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:10:56 | INFO     | jobs.etl.load | Load complete
+[2026-06-18T08:10:56.328+0000] {weather_etl_dag.py:136} INFO - Load complete | rows=960
+[2026-06-18T08:10:56.334+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-06-18T08:10:56.341+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-06-18T08:10:56.368+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=weather_etl_pipeline, task_id=load_weather_data, run_id=scheduled__2026-06-17T00:00:00+00:00, execution_date=20260617T000000, start_date=20260618T081050, end_date=20260618T081056
+[2026-06-18T08:10:56.489+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-06-18T08:10:56.528+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-06-18T08:10:56.538+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

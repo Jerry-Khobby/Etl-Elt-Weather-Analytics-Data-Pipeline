@@ -1,0 +1,120 @@
+[2026-06-18T08:05:02.686+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-06-18T08:05:03.055+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_etl_pipeline.extract_weather_data scheduled__2026-06-17T00:00:00+00:00 [queued]>
+[2026-06-18T08:05:03.112+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_etl_pipeline.extract_weather_data scheduled__2026-06-17T00:00:00+00:00 [queued]>
+[2026-06-18T08:05:03.148+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-06-18T08:05:03.261+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_weather_data> on 2026-06-17 00:00:00+00:00
+[2026-06-18T08:05:03.295+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_etl_pipeline', 'extract_weather_data', 'scheduled__2026-06-17T00:00:00+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/weather_etl_dag.py', '--cfg-path', '/tmp/tmptvv2nyzw']
+[2026-06-18T08:05:03.317+0000] {standard_task_runner.py:91} INFO - Job 10: Subtask extract_weather_data
+[2026-06-18T08:05:03.345+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=7363) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-06-18T08:05:03.352+0000] {standard_task_runner.py:63} INFO - Started process 7364 to run task
+[2026-06-18T08:05:03.547+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_etl_pipeline.extract_weather_data scheduled__2026-06-17T00:00:00+00:00 [running]> on host b1ed001435bc
+[2026-06-18T08:05:04.110+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='weather_etl_pipeline' AIRFLOW_CTX_TASK_ID='extract_weather_data' AIRFLOW_CTX_EXECUTION_DATE='2026-06-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-06-17T00:00:00+00:00'
+[2026-06-18T08:05:04.117+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-06-18T08:05:12.483+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:05:12 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-11 → 2026-06-18
+[2026-06-18T08:05:12.612+0000] {connectionpool.py:874} WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ade0594bf20>: Failed to resolve 'api.open-meteo.com' ([Errno -2] Name or service not known)")': /v1/forecast?latitude=5.556&longitude=-0.1969&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Crain%2Csnowfall%2Cweather_code%2Ccloud_cover%2Cwind_speed_10m%2Cwind_direction_10m%2Cwind_gusts_10m%2Csurface_pressure%2Cvisibility%2Cuv_index%2Cis_day&start_date=2026-06-11&end_date=2026-06-18&timezone=Africa%2FAccra
+[2026-06-18T08:05:16.622+0000] {connectionpool.py:874} WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ade0537e000>: Failed to resolve 'api.open-meteo.com' ([Errno -2] Name or service not known)")': /v1/forecast?latitude=5.556&longitude=-0.1969&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Crain%2Csnowfall%2Cweather_code%2Ccloud_cover%2Cwind_speed_10m%2Cwind_direction_10m%2Cwind_gusts_10m%2Csurface_pressure%2Cvisibility%2Cuv_index%2Cis_day&start_date=2026-06-11&end_date=2026-06-18&timezone=Africa%2FAccra
+[2026-06-18T08:05:24.568+0000] {connectionpool.py:874} WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ade0537eab0>: Failed to resolve 'api.open-meteo.com' ([Errno -2] Name or service not known)")': /v1/forecast?latitude=5.556&longitude=-0.1969&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Crain%2Csnowfall%2Cweather_code%2Ccloud_cover%2Cwind_speed_10m%2Cwind_direction_10m%2Cwind_gusts_10m%2Csurface_pressure%2Cvisibility%2Cuv_index%2Cis_day&start_date=2026-06-11&end_date=2026-06-18&timezone=Africa%2FAccra
+[2026-06-18T08:05:24.890+0000] {logging_mixin.py:188} WARNING - 2026-06-18 08:05:24 | ERROR    | jobs.etl.extraction | Connection error while calling the API: HTTPSConnectionPool(host='api.open-meteo.com', port=443): Max retries exceeded with url: /v1/forecast?latitude=5.556&longitude=-0.1969&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Crain%2Csnowfall%2Cweather_code%2Ccloud_cover%2Cwind_speed_10m%2Cwind_direction_10m%2Cwind_gusts_10m%2Csurface_pressure%2Cvisibility%2Cuv_index%2Cis_day&start_date=2026-06-11&end_date=2026-06-18&timezone=Africa%2FAccra (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ade0537ec90>: Failed to resolve 'api.open-meteo.com' ([Errno -2] Name or service not known)"))
+[2026-06-18T08:05:25.009+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-06-18T08:05:25.058+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/util/connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 491, in _make_request
+    raise new_e
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1099, in _validate_conn
+    conn.connect()
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connection.py", line 616, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connection.py", line 205, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: <urllib3.connection.HTTPSConnection object at 0x7ade0537ec90>: Failed to resolve 'api.open-meteo.com' ([Errno -2] Name or service not known)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/adapters.py", line 486, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 877, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/util/retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.open-meteo.com', port=443): Max retries exceeded with url: /v1/forecast?latitude=5.556&longitude=-0.1969&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Crain%2Csnowfall%2Cweather_code%2Ccloud_cover%2Cwind_speed_10m%2Cwind_direction_10m%2Cwind_gusts_10m%2Csurface_pressure%2Cvisibility%2Cuv_index%2Cis_day&start_date=2026-06-11&end_date=2026-06-18&timezone=Africa%2FAccra (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ade0537ec90>: Failed to resolve 'api.open-meteo.com' ([Errno -2] Name or service not known)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/weather_etl_dag.py", line 53, in _extract
+    results = extractor.extract_all(locations, start_date, end_date)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/jobs/etl/extraction.py", line 65, in extract_all
+    results = [self.extract(loc, start_date, end_date) for loc in locations]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/jobs/etl/extraction.py", line 88, in extract
+    raw = self._fetch(params)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/jobs/etl/extraction.py", line 121, in _fetch
+    response = self._session.get(
+               ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/adapters.py", line 519, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.open-meteo.com', port=443): Max retries exceeded with url: /v1/forecast?latitude=5.556&longitude=-0.1969&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Crain%2Csnowfall%2Cweather_code%2Ccloud_cover%2Cwind_speed_10m%2Cwind_direction_10m%2Cwind_gusts_10m%2Csurface_pressure%2Cvisibility%2Cuv_index%2Cis_day&start_date=2026-06-11&end_date=2026-06-18&timezone=Africa%2FAccra (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ade0537ec90>: Failed to resolve 'api.open-meteo.com' ([Errno -2] Name or service not known)"))
+[2026-06-18T08:05:25.563+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=weather_etl_pipeline, task_id=extract_weather_data, run_id=scheduled__2026-06-17T00:00:00+00:00, execution_date=20260617T000000, start_date=20260618T080503, end_date=20260618T080525
+[2026-06-18T08:05:25.687+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 10 for task extract_weather_data (HTTPSConnectionPool(host='api.open-meteo.com', port=443): Max retries exceeded with url: /v1/forecast?latitude=5.556&longitude=-0.1969&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Crain%2Csnowfall%2Cweather_code%2Ccloud_cover%2Cwind_speed_10m%2Cwind_direction_10m%2Cwind_gusts_10m%2Csurface_pressure%2Cvisibility%2Cuv_index%2Cis_day&start_date=2026-06-11&end_date=2026-06-18&timezone=Africa%2FAccra (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ade0537ec90>: Failed to resolve 'api.open-meteo.com' ([Errno -2] Name or service not known)")); 7364)
+[2026-06-18T08:05:25.785+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-06-18T08:05:25.859+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-06-18T08:05:25.866+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

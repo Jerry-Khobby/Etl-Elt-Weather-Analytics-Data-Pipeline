@@ -57,3 +57,5 @@ CREATE TABLE IF NOT EXISTS fact_weather (
     extracted_at           TIMESTAMPTZ,
     UNIQUE (location_id, date_id, time_id)
 );
+
+\i /docker-entrypoint-initdb.d/views_analytics.sql

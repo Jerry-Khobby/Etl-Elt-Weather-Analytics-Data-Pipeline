@@ -92,6 +92,7 @@ services:
     volumes:
       - postgres_analytics_data:/var/lib/postgresql/data
       - ./sql/init_analytics.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./sql/views_analytics.sql:/docker-entrypoint-initdb.d/views_analytics.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${ANALYTICS_DB_USER} -d ${ANALYTICS_DB_NAME}"]
       interval: 10s
@@ -226,6 +227,29 @@ services:
       - weather_network
     restart: "no"
 
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    volumes:
+      - metabase_data:/metabase-data
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db
+      JAVA_TIMEZONE: UTC
+    depends_on:
+      postgres_analytics:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    restart: unless-stopped
+    networks:
+      - weather_network
+
   test:
     build: .
     container_name: etl_tests
@@ -246,6 +270,7 @@ volumes:
   postgres_airflow_data:
   postgres_staging_data:
   postgres_analytics_data:
+  metabase_data:
 
 networks:
   weather_network:

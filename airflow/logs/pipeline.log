@@ -36,3 +36,27 @@
 2026-06-17 11:52:35 | INFO     | jobs.etl.load | fact_weather: inserted 960 row(s)
 2026-06-17 11:52:35 | INFO     | jobs.etl.load | Load complete
 2026-06-17 11:52:35 | INFO     | jobs.etl.load | Load complete
+2026-06-18 08:05:12 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-11 → 2026-06-18
+2026-06-18 08:05:24 | ERROR    | jobs.etl.extraction | Connection error while calling the API: HTTPSConnectionPool(host='api.open-meteo.com', port=443): Max retries exceeded with url: /v1/forecast?latitude=5.556&longitude=-0.1969&hourly=temperature_2m%2Crelative_humidity_2m%2Cprecipitation%2Crain%2Csnowfall%2Cweather_code%2Ccloud_cover%2Cwind_speed_10m%2Cwind_direction_10m%2Cwind_gusts_10m%2Csurface_pressure%2Cvisibility%2Cuv_index%2Cis_day&start_date=2026-06-11&end_date=2026-06-18&timezone=Africa%2FAccra (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ade0537ec90>: Failed to resolve 'api.open-meteo.com' ([Errno -2] Name or service not known)"))
+2026-06-18 08:10:31 | INFO     | jobs.etl.extraction | Starting extraction | location=Accra, Ghana | range=2026-06-11 → 2026-06-18
+2026-06-18 08:10:32 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Accra | records=192
+2026-06-18 08:10:32 | INFO     | jobs.etl.extraction | Starting extraction | location=London, United Kingdom | range=2026-06-11 → 2026-06-18
+2026-06-18 08:10:33 | INFO     | jobs.etl.extraction | Extraction succeeded | location=London | records=192
+2026-06-18 08:10:33 | INFO     | jobs.etl.extraction | Starting extraction | location=New York, United States | range=2026-06-11 → 2026-06-18
+2026-06-18 08:10:33 | INFO     | jobs.etl.extraction | Extraction succeeded | location=New York | records=192
+2026-06-18 08:10:33 | INFO     | jobs.etl.extraction | Starting extraction | location=Tokyo, Japan | range=2026-06-11 → 2026-06-18
+2026-06-18 08:10:33 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Tokyo | records=192
+2026-06-18 08:10:33 | INFO     | jobs.etl.extraction | Starting extraction | location=Berlin, Germany | range=2026-06-11 → 2026-06-18
+2026-06-18 08:10:33 | INFO     | jobs.etl.extraction | Extraction succeeded | location=Berlin | records=192
+2026-06-18 08:10:33 | INFO     | jobs.etl.extraction | Batch extraction complete | locations=5 | total_records=960
+2026-06-18 08:10:38 | INFO     | jobs.etl.transform | Transformation started | rows=960
+2026-06-18 08:10:38 | INFO     | jobs.etl.transform | Transformation complete | rows=960
+2026-06-18 08:10:54 | INFO     | jobs.etl.load | Database engine ready | host=postgres_analytics port=5432 db=weather_analytics
+2026-06-18 08:10:54 | INFO     | jobs.etl.load | Star schema initialized (tables created where absent)
+2026-06-18 08:10:54 | INFO     | jobs.etl.load | Load started | rows=960
+2026-06-18 08:10:54 | INFO     | jobs.etl.load | dim_location: upserted 5 row(s)
+2026-06-18 08:10:54 | INFO     | jobs.etl.load | dim_date: upserted 8 row(s)
+2026-06-18 08:10:54 | INFO     | jobs.etl.load | dim_time: upserted 24 row(s)
+2026-06-18 08:10:54 | INFO     | jobs.etl.load | dim_weather_condition: upserted 13 row(s)
+2026-06-18 08:10:56 | INFO     | jobs.etl.load | fact_weather: inserted 960 row(s)
+2026-06-18 08:10:56 | INFO     | jobs.etl.load | Load complete
